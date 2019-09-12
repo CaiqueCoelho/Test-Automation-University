@@ -1,0 +1,209 @@
+# Get toggle-all by id and click
+document.getElementById("toggle-all").click()
+
+# Click in just one toggle
+document.querySelector("ul.todo-list > li:nth-child(1) input.toggle")
+
+# Get destroy button
+document.querySelector("ul.todo-list > li:nth-child(1) button.destroy")
+
+# Get button clear-completed
+document.querySelector("button.clear-completed")
+
+# Get filter
+document.querySelector("ul.filters > li:nth-child(3) > a").click()
+location.hash = "/completed"
+location.hash = "/active"
+location.hash = "/"
+
+# Input a to do in filed
+document.querySelector('input.new-todo').value="hello";
+document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true}));
+
+# Edit a input todo
+document.querySelector("ul.todo-list > li:nth-child(2) > div > label").dispatchEvent(new Event('dblclick', {'bubbles':true}));
+document.querySelector("ul.todo-list > li:nth-child(2) .edit").value="amended";
+document.querySelector("ul.todo-list > li:nth-child(2) .edit").dispatchEvent(new Event('blur'));
+
+# Click in every toggle
+for(toggleIndex = 0; toggleIndex < toggles.length; toggleIndex++){
+    toggles[toggleIndex].click()
+}
+
+# Click in even todos index
+for(toggleIndex = 1; toggleIndex < toggles.length; toggleIndex+=2){
+	if(toggleIndex % 2 == 1){
+    	toggles[toggleIndex].click()
+	}
+}
+
+function clickItem(item){
+    item.click()
+}
+
+function toggleAll(){
+    document.getElementById("toggle-all").click()
+}
+
+function selectItemX(x){
+    document.querySelector("ul.todo-list > li:nth-child(" + x + ") input.toggle").click()
+}
+
+function deleteItemX(x){
+    document.querySelector("ul.todo-list > li:nth-child(" + x + ") button.destroy").click()
+}
+
+function clearCompleted(){
+    document.querySelector("button.clear-completed").click()
+}
+
+function filterCompleted(){
+    location.hash = "/completed"
+}
+
+function filterAll(){
+    location.hash = "/"
+}
+
+function filterActive(){
+    location.hash = "/active"
+}
+
+function createTodo(name){
+    document.querySelector('input.new-todo').value=name;
+    document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true}));  
+}
+
+function amendTodo(x, name){
+    document.querySelector("ul.todo-list > li:nth-child(" + x + ") > div > label").dispatchEvent(new Event('dblclick', {'bubbles':true}));
+    document.querySelector("ul.todo-list > li:nth-child(" + x + ") .edit").value=name;
+    document.querySelector("ul.todo-list > li:nth-child(" + x + ") .edit").dispatchEvent(new Event('blur'));
+}
+
+var myAutoTodo = new function(){
+
+    this.clickItem = function (item) {
+        item.click()
+    }
+
+    this.toggleAll = function (){
+        document.getElementById("toggle-all").click()
+    }
+
+    this.selectItemX = function (x){
+        document.querySelector("ul.todo-list > li:nth-child(" + x + ") input.toggle").click()
+    }
+
+    this.deleteItemX = function (x){
+        document.querySelector("ul.todo-list > li:nth-child(" + x + ") button.destroy").click()
+    }
+
+    this.clearCompleted = function (){
+        document.querySelector("button.clear-completed").click()
+    }
+
+    this.filterCompleted = function (){
+        location.hash = "/completed"
+    }
+
+    this.filterAll = function (){
+        location.hash = "/"
+    }
+
+    this.filterActive = function (){
+        location.hash = "/active"
+    }
+
+    this.createTodo = function (name){
+        document.querySelector('input.new-todo').value=name;
+        document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true}));  
+    }
+
+    this.amendTodo = function (x, name){
+        document.querySelector("ul.todo-list > li:nth-child(" + x + ") > div > label").dispatchEvent(new Event('dblclick', {'bubbles':true}));
+        document.querySelector("ul.todo-list > li:nth-child(" + x + ") .edit").value=name;
+        document.querySelector("ul.todo-list > li:nth-child(" + x + ") .edit").dispatchEvent(new Event('blur'));
+    }
+}
+
+function createTodo(name){
+    document.querySelector('input.new-todo').value=name;
+    document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true}));  
+}
+
+for(x=1; x<=100; x++){
+    setTimeout(createTodo, x*100, "todo " + x);
+}
+
+var botTodoCount = 0
+
+var botCreateTodo = setInterval(
+    function createTodo(){
+        document.querySelector('input.new-todo').value="todo " + botTodoCount;
+        document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true}));  
+    
+        botTodoCount++
+        if(botTodoCount >= 100){
+            clearInterval(botCreateTodo);
+        }
+    }, 500);
+
+javascript:(function(){
+    
+    max = prompt("How many?")
+    if(max){
+        for(x=1; x<=max; x++){
+            setTimeout(function(name){
+                document.querySelector('input.new-todo').value=name;
+                document.querySelector('input.new-todo').dispatchEvent(new Event('change', {'bubbles':true})); 
+            }, x*100, "todo " + x);
+    }   
+    }
+})()
+
+
+var rando = new function(){
+    function getRandomInt(x){
+        return Math.floor(Math.random()*x)
+    }
+
+    function getRandomItemIndex(){
+        max = document.querySelectorAll("ul.todo-list li").length
+        if(max===0){
+            console.log("No items found");
+            return 0;
+        }
+        x = getRandomInt(max) + 1;
+        return x;
+    }
+
+    this.toggleAll = function(){
+        console.log("Toggle All");
+        myAutoTodo.toggleAll()
+    }
+
+    this.selectRandomItem = function(){
+        x = getRandomItemIndex();
+        if(x > 0){
+            console.log("Selected item: " + x);
+            myAutoTodo.selectItemX(x);
+        }
+    }
+}
+
+var randomBot = setInterval(function(){
+    theFunctions = [];
+
+for(var prop in rando){
+    if(typeof rando[prop] == 'function'){
+        console.log(prop)
+        theFunctions.push(prop)
+    }
+}
+
+var randomFunctionIndex = Math.floor(Math.random() * theFunctions.length);
+
+rando[theFunctions[randomFunctionIndex]]()  
+}, 1000)
+
+//clearInterval(randomBot)
